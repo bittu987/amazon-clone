@@ -29,6 +29,8 @@ module.exports = {
       lightText: "#ccc",
       quantity_box:"#F0F2F2",
       footerBottom: "#131A22",
+      drop200: "rgb(229 231 235)",
+      drop300:"rgb(209 213 219)",
     },
     boxShadow:{
       testShadow: "0px 0px 32px 1px rgba(199,199,199,1)",
