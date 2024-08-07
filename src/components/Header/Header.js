@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
+import { useSelector } from "react-redux";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
@@ -6,21 +7,27 @@ import {allItems} from "../../constants/index"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HeaderBottom from './HeaderBottom';
 import logo from "../../assets/logo.png"
+import { Link } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Header = () => {
    const [showAllToggle,setShowAllToggle] = useState(false);
-   console.log(showAllToggle);
+   const products = useSelector((state) => state.amazonReducer.products);
+   const userInfo = useSelector((state) => state.amazonReducer.userInfo);
+  
 
   return (
     <>
-    <div >
+    <div className='w-full sticky top-0 z-50' >
       <div className='w-full bg-amazon_blue px-3 py-2 flex items-center gap-4'>
         {/* Amazon logo */}
+        <Link to="/">
           <div className='px-2 h-[80%] flex items-center border border-transparent hover:border-whiteText cursor-pointer'>
             <img src={logo} className='w-24 mt-2' alt='logo' />
           </div>
+          </Link>
           {/* Location  */}
-          <div className='px-2 h-[80%] flex items-center border border-transparent hover:border-whiteText cursor-pointer'>
+          <div className='px-2 h-[80%] xl:flex items-center border border-transparent hover:border-whiteText cursor-pointer  md:inline-flex hidden'>
           <LocationOnIcon className='text-whiteText'/>
           <p className="text-sm text-lightText font-light flex flex-col">Deliver to <span className='text-sm font-semibold -mt-1 text-whiteText'>Delhi</span></p>
           </div>
@@ -44,23 +51,39 @@ const Header = () => {
             <span className='w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md'><SearchIcon/></span>
           </div>
           {/* Sign In   */}
+          <Link to="/signin">
           <div className='flex flex-col item-start justify-center border border-transparent hover:border-whiteText cursor-pointer'>
-            <p className='text-xs text-lightText font-light '>Hello, Sign in</p>
-            <p className='text-sm font-semibold -mt-1 text-whiteText'>Accounts & List <span><ArrowDropDownIcon/></span></p>
+            <p className='test-sm mdl:text-xs text-whiteText mdl:text-lightText font-light '>Hello, Sign in</p>
+            <p className='text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex'>Accounts & List <span><ArrowDropDownIcon/></span></p>
           </div>
+          </Link>
           {/* return and Orders */}
-          <div className='flex flex-col item-start justify-center border border-transparent hover:border-whiteText cursor-pointer' >
+          <div className='lgl:flex flex-col item-start justify-center border border-transparent hover:border-whiteText cursor-pointer   md:hidden inline-flex' >
             <p className='text-xs text-lightText font-light'>Returns</p>
             <p className='text-sm font-semibold -mt-1 text-whiteText'>& Orders</p>
           </div>
           {/* shopingcart */}
+          <Link to="/cart">
           <div className='flex items-start justify-center relative border border-transparent hover:border-whiteText cursor-pointer'>
            <ShoppingCartIcon className='text-whiteText'/>
-           <p className='text-xs font-semibold mt-3 text-whiteText'>Cart <span className='absolute text-xs -top-1 left-5 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center'>0</span></p>
+           <p className='text-xs font-semibold mt-3 text-whiteText'>Cart <span className='absolute text-xs -top-1 left-5 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center'>{products.length > 0 ? products.length : 0}</span></p>
           </div>
+          </Link>
+          {userInfo && (
+          <div
+            
+            className="flex flex-col justify-center px-2 h-[80%] items-center border border-transparent hover:border-whiteText cursor-pointer duration-100 relative"
+          >
+            <LogoutIcon className='text-whiteText' />
+            <p className="hidden mdl:inline-flex text-xs font-semibold text-whiteText">
+              Log out
+            </p>
+          </div>
+        )}
       </div>
+      <HeaderBottom/>
     </div>
-    <HeaderBottom/>
+    
     </>
   )
 }

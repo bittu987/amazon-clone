@@ -27,18 +27,18 @@ const HeaderBottom = () => {
           <MenuIcon />
           All
         </li>
-        <li className="cursor-pointer">Today's Deals</li>
-        <li className="cursor-pointer">Customer Service</li>
-        <li className="cursor-pointer">Gift Cards</li>
-        <li className="cursor-pointer">Registry</li>
-        <li className="cursor-pointer">Sell</li>
+        <li className="cursor-pointer hidden md:inline-flex">Today's Deals</li>
+        <li className="cursor-pointer hidden md:inline-flex">Customer Service</li>
+        <li className="cursor-pointer hidden md:inline-flex">Gift Cards</li>
+        <li className="cursor-pointer hidden md:inline-flex">Registry</li>
+        <li className="cursor-pointer hidden md:inline-flex">Sell</li>
       </ul>
       {/* ============ ListItems End here ============== */}
       {/* ============ sideNav Start here ============== */}
       {sidebar && (
-        <div className="w-full h-screen text-[#000000] fixed top-0 left-0 bg-[#FFFFFF] bg-opacity-10">
+        <div className="w-full h-screen text-[#000000] fixed top-0 left-0 bg-[#FFFFFF] bg-opacity-50">
           <div className="w-full h-full relative">
-            <motion.div ref={ref} initial={{x:-500,opacity:0}} animate={{x:0, opacity:1}} transition={{duration:.5}} className="w-[350px] h-full bg-white border border-black">
+            <motion.div ref={ref} initial={{x:-500,opacity:0}} animate={{x:0, opacity:1}} transition={{duration:.5}} className="w-[80%] md:w-[350px] h-full bg-white border border-black">
               <div className="w-full bg-amazon_light py-2 px-6 flex items-center gap-4">
                 <AccountCircleIcon className='text-whiteText' />
                 <h3 className="font-titleFont font-bold text-lg tracking-wide text-whiteText">
