@@ -3,14 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import darkLogo from "../assets/darkLogo.png"
 import { RotatingLines } from "react-loader-spinner";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import setUserInfo  from "../redux/amazonSlice";
+// import setUserInfo  from "../redux/amazonSlice";
+
 
 const Signin = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errEmail, setErrEmail] = useState("");
@@ -32,7 +33,8 @@ const Signin = () => {
     setErrPassword("");
     setUserPassErr("");
   };
-  const handleLogin = (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!email) {
       setErrEmail("Enter your email");
@@ -42,36 +44,33 @@ const Signin = () => {
     }
     if (email && password) {
       setLoading(true);
-      signInWithEmailAndPassword(auth, email, password)
+      await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
+          const user = userCredential?.user;
           // Signed in
-          dispatch(
-            setUserInfo({
-              _id: user.uid,
-              userName: user.displayName,
-              email: user.email,
-              image: user.photoURL,
-            })
-          );
+          // console.log(user);  
+          // dispatch(
+          //   setUserInfo({
+          //     _id: user?.uid,
+          //     userName: user?.displayName,
+          //     email: user?.email,
+              
+          //   })
+          // );
           setLoading(false);
           setSuccessMsg("Login Successfull! Welcome you back!");
+          console.log(successMsg);
           setLoading(false);
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
+          navigate("/");
+          setEmail("");
+          setPassword("");
         })
-        .catch((error) => {
+        .catch((err)=>{
           setLoading(false);
-          const errorCode = error.code;
-          if (errorCode?.includes("auth/invalid-email")) {
-            setUserEmailErr("Invalid Email");
-          }
-          if (errorCode?.includes("auth/wrong-password")) {
-            setUserPassErr("Wrong password! try again");
-          }
-          console.log("Something is up, Try with correct Credential!");
+           alert(err);
+          
         });
+          
     }
   };
   return (

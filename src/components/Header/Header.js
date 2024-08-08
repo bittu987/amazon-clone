@@ -9,17 +9,29 @@ import HeaderBottom from './HeaderBottom';
 import logo from "../../assets/logo.png"
 import { Link } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
 
 const Header = () => {
    const [showAllToggle,setShowAllToggle] = useState(false);
    const products = useSelector((state) => state.amazonReducer.products);
    const userInfo = useSelector((state) => state.amazonReducer.userInfo);
+   const navigate = useNavigate();
+   
+    
+  
+    const handleLogout = async () => {
+      await signOut(auth);
+      navigate("/signin");
+    };
+
   
 
   return (
     <>
     <div className='w-full sticky top-0 z-50' >
-      <div className='w-full bg-amazon_blue px-3 py-2 flex items-center gap-4'>
+      <div className="w-full bg-amazon_blue  px-4 py-3 flex md:justify-between items-center gap-2 md:gap-4 lgl:gap-2 xl:gap-4">
         {/* Amazon logo */}
         <Link to="/">
           <div className='px-2 h-[80%] flex items-center border border-transparent hover:border-whiteText cursor-pointer'>
@@ -27,12 +39,12 @@ const Header = () => {
           </div>
           </Link>
           {/* Location  */}
-          <div className='px-2 h-[80%] xl:flex items-center border border-transparent hover:border-whiteText cursor-pointer  md:inline-flex hidden'>
+          <div className='hidden md:inline-flex px-2 h-[80%] xl:flex items-center border border-transparent hover:border-whiteText cursor-pointer  '>
           <LocationOnIcon className='text-whiteText'/>
           <p className="text-sm text-lightText font-light flex flex-col">Deliver to <span className='text-sm font-semibold -mt-1 text-whiteText'>Delhi</span></p>
           </div>
           {/* Search Bar */}
-          <div className='h-10 rounded-md flex flex-grow relative'>
+          <div className="hidden lgl:inline-flex h-10 rounded-md flex-grow relative">
             <span onClick={()=>setShowAllToggle(!showAllToggle)} className='w-12 h-full flex items-center justify-center bg-drop300 hover:bg-drop200 duration-300 text-amazon_blue cursor-pointer rounded-tl-md rounded-bl-md'>All<span></span><ArrowDropDownIcon/></span>
             {
               showAllToggle && (
@@ -53,12 +65,12 @@ const Header = () => {
           {/* Sign In   */}
           <Link to="/signin">
           <div className='flex flex-col item-start justify-center border border-transparent hover:border-whiteText cursor-pointer'>
-            <p className='test-sm mdl:text-xs text-whiteText mdl:text-lightText font-light '>Hello, Sign in</p>
-            <p className='text-sm font-semibold -mt-1 text-whiteText hidden mdl:inline-flex'>Accounts & List <span><ArrowDropDownIcon/></span></p>
+            <p className='test-sm mdl:text-xs text-whiteText mdl:text-lightText font-light '>Hello, Customer</p>
+            <p className='hidden md:inline-flex text-sm font-semibold -mt-1 text-whiteText'>Accounts & List <span><ArrowDropDownIcon/></span></p>
           </div>
           </Link>
           {/* return and Orders */}
-          <div className='lgl:flex flex-col item-start justify-center border border-transparent hover:border-whiteText cursor-pointer   md:hidden inline-flex' >
+          <div className=' hidden mdl:flex  items-start flex-col item-start justify-center border border-transparent hover:border-whiteText cursor-pointer' >
             <p className='text-xs text-lightText font-light'>Returns</p>
             <p className='text-sm font-semibold -mt-1 text-whiteText'>& Orders</p>
           </div>
@@ -71,7 +83,7 @@ const Header = () => {
           </Link>
           {userInfo && (
           <div
-            
+            onClick={handleLogout}
             className="flex flex-col justify-center px-2 h-[80%] items-center border border-transparent hover:border-whiteText cursor-pointer duration-100 relative"
           >
             <LogoutIcon className='text-whiteText' />

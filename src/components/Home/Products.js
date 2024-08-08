@@ -30,7 +30,7 @@ const Products = () => {
 
   return (
     
-    <div className='max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 xl:gap-10 px-4  -mt-10 xl:-mt-12 mb-6 '>
+    <div className='max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 xl:gap-4 px-4 xl:-mt-10'>
       {
         productData?.map((item)=>(
           <div key={item.id} className='bg-whiteText border-[1px] border-[#EEEEEE] py-6 z-30 hover:border-[#FFFFFF] shadow-none hover:shadow-testshadow duration-200 relative flex flex-col gap-4'>

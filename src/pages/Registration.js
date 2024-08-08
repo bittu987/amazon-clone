@@ -100,8 +100,8 @@ const Registration = () => {
           // Signed in
           updateProfile(auth.currentUser, {
             displayName: clientName,
-            photoURL:
-              "",
+            // photoURL:
+            //   "",
           });
           setLoading(false);
           setSuccessMsg("Account Created Successfully!");
